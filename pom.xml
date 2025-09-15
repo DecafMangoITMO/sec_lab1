@@ -121,30 +121,16 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>io.snyk</groupId>
-				<artifactId>snyk-maven-plugin</artifactId>
-				<version>2.2.0</version>
-				<inherited>false</inherited>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>12.1.3</version> <!-- Use the latest stable version -->
 				<executions>
 					<execution>
-						<id>snyk-test</id>
 						<goals>
-							<goal>test</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>snyk-monitor</id>
-						<goals>
-							<goal>monitor</goal>
+							<goal>check</goal>
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<apiToken>${env.SNYK_TOKEN}</apiToken>
-					<args>
-						<arg>--all-projects</arg>
-					</args>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
