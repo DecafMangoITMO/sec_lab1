@@ -21,7 +21,7 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

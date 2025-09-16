@@ -32,11 +32,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> {
-                    headers.xssProtection(
-                            xss ->
-                                    xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED)
-                    ).contentSecurityPolicy(
-                            csp -> csp.policyDirectives("script-src 'self'")
+                    headers.contentSecurityPolicy(
+                            csp -> csp.policyDirectives(
+                                    "script-src 'self'; " +
+                                            "style-src 'self'; " +
+                                            "img-src: 'self'"
+                            )
                     );
                 })
                 .authorizeHttpRequests(request -> request

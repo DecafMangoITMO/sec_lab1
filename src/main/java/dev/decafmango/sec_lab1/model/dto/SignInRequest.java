@@ -3,15 +3,13 @@ package dev.decafmango.sec_lab1.model.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder(toBuilder = true)
 public class SignInRequest {
 
     @NotBlank(message = "Email must not be blank!")

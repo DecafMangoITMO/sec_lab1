@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@Builder(toBuilder = true)
 public class PostDto {
 
     @NotBlank(message = "Content must not be blank!")
