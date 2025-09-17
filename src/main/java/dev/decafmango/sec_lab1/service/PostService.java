@@ -1,9 +1,9 @@
 package dev.decafmango.sec_lab1.service;
 
+import dev.decafmango.sec_lab1.exception.ApplicationException;
 import dev.decafmango.sec_lab1.model.Post;
 import dev.decafmango.sec_lab1.model.User;
 import dev.decafmango.sec_lab1.model.dto.PostDto;
-import dev.decafmango.sec_lab1.model.dto.UserDto;
 import dev.decafmango.sec_lab1.repository.PostRepository;
 import dev.decafmango.sec_lab1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,12 @@ public class PostService {
                 .user(user)
                 .build();
 
-        postRepository.save(post);
+        try {
+            postRepository.save(post);
+        } catch (Exception ex) {
+            throw new ApplicationException("Bad request", ApplicationException.Reason.BAD_REQUEST);
+        }
+
         return postDto;
     }
 }

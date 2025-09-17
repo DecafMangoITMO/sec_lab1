@@ -35,7 +35,11 @@ public class AuthenticationService {
                 .nickname(request.getNickname())
                 .build();
 
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (Exception ex) {
+            throw new ApplicationException("Bad request", ApplicationException.Reason.BAD_REQUEST);
+        }
 
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);

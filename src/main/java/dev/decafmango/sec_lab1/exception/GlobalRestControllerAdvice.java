@@ -31,7 +31,7 @@ public class GlobalRestControllerAdvice {
     @ExceptionHandler
     public ResponseEntity handleApplicationException(ApplicationException exception) {
         return switch (exception.getReason()) {
-            case ALREADY_EXISTS -> new ResponseEntity(
+            case BAD_REQUEST, ALREADY_EXISTS -> new ResponseEntity(
                     new ExceptionDto(exception.getMessage()),
                     HttpStatus.BAD_REQUEST
             );

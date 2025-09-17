@@ -223,18 +223,13 @@ components:
 #### Защита от XSS:
 
 Для защиты от XSS используются средства стартера spring-boot-starter-security:3.5.5:
-  - Реализован санитайзер, заменяющий спецсимволы HTML на их безопасную версию:
+  - Используется OWASP Java HTML санитайзер, который преобразует входные значения к безопасному виду
+(заменяет спецсимволы, удаляет теги и т.д.):
     ```java
-    private String sanitize(String input) {
-        if (input == null || input.trim().isEmpty()) {
-            return input;
-        }
+    private static final PolicyFactory POLICY = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
-        return input.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&#x27;");
+    private String sanitize(String input) {
+        return POLICY.sanitize(input);
     }
     ```
   - Для большей уверенности были включены политики безопасности контента (Content-Security-Policy; CSP), которые
@@ -257,7 +252,7 @@ security:
     signing-key: ${TOKEN-SIGNING-KEY}
     tll-seconds: 600
 ```
-Подпись осуществляется алгоритмом HS256. 
+Подпись осуществляется алгоритмом HS256. Пароли пользователей хэшируются алгоритмом bcrypt.
 
 Получение токена реализовано через эндпоинты /auth/sign-up /auth/sign-in. Для аутентификации пользователя по jwt
 испольуется middleware JwtAuthenticationFilter, где производится:

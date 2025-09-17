@@ -3,21 +3,17 @@ package dev.decafmango.sec_lab1.validation;
 import dev.decafmango.sec_lab1.model.dto.PostDto;
 import dev.decafmango.sec_lab1.model.dto.SignInRequest;
 import dev.decafmango.sec_lab1.model.dto.SignUpRequest;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.stereotype.Component;
 
 @Component
 public class XssSanitizer {
 
-    private String sanitize(String input) {
-        if (input == null || input.trim().isEmpty()) {
-            return input;
-        }
+    private static final PolicyFactory POLICY = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
-        return input.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&#x27;");
+    private String sanitize(String input) {
+        return POLICY.sanitize(input);
     }
 
     public SignUpRequest sanitize(SignUpRequest signUpRequest) {

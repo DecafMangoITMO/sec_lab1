@@ -13,6 +13,7 @@ public class ApplicationException extends RuntimeException {
     }
 
     public enum Reason {
+        BAD_REQUEST,
         ALREADY_EXISTS,
     }
 
